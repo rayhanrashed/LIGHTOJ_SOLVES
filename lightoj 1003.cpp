@@ -58,17 +58,109 @@ typedef vector< PLL >VPLL;
 #define FI freopen("in.txt", "r",stdin)
 //int a[100000];
 int m,n;
+
+struct node
+{
+    string name;
+    int start;
+    int finish;
+};
+int t=1;
+int test;
+map <string, pair<int,int> > detail;
+map <string, int> vis;
+        set< string > s;
+map < string , vector<string> > mymap;
+
+
+
+void dfsvis(string s)
+{
+    detail[s].first=t;
+    t++;
+    foreach(i,mymap[s])
+    {
+        //cout<<*(i)<<endl;
+        if(vis[*(i)]==0)
+        {
+            vis[*(i)]=1;
+            dfsvis(*(i));
+        }
+        else
+        {
+            if(detail[*(i)].second==0)
+            {
+                test=1;
+                return;
+            }
+        }
+    }
+    detail[s].second=t;
+    t++;
+}
+void dfs()
+{
+    foreach(i,s)
+    {
+        if(test==1)return;
+        if(vis[*(i)]==0)
+        {
+            dfsvis(*(i));
+        }
+        //cout<<*(i)<<" -> "<<detail[*(i)].first<<" /" <<detail[*(i)].second<<"\n";
+    }
+}
+
 int main()
 {
-    int t,kaS=0,i,j,k,p,q,r;
+    int t,kaS=0,i,j,k,p,q,r,taa;
     //FI;
-    //FO;
-    cin>>t;
-    while(t--)
+    FO;
+    cin>>taa;
+    while(taa--)
     {
+        //cout<<taa<<endl;
+        test=0;
 
+        string a,b;
+        mymap.clear();
+        s.clear();
+        cin>>n;
 
-        printf("Case %d: \n", ++kaS );
+        for(int i=1;i<=n;i++)
+        {
+            cin>> a>>b;
+            mymap[a].push_back(b);
+            s.insert(a);
+            s.insert(b);
+        }
+        t=0;
+        foreach(i,s)
+        {
+            vis[*(i)]=0;
+            detail[*(i)].first=0;
+            detail[*(i)].second=0;
+        }
+//        for(auto it:s)
+//        {
+//            cout<<it;
+//            for(int i=0;i<mymap[it].size();i++)
+//            {
+//                cout<<mymap[it][i]<<" ";
+//            }
+//            cout<<"\n";
+//        }
+        dfs();
+
+        printf("Case %d: ", ++kaS );
+        if(test==0)
+        {
+            printf("Yes\n");
+        }
+        else
+        {
+            printf("No\n");
+        }
     }
     return 0;
 }
