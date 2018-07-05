@@ -102,10 +102,11 @@ void dfs()
 {
     foreach(i,s)
     {
-        if(test==1)return;
+
         if(vis[*(i)]==0)
         {
             dfsvis(*(i));
+            if(test==1)return;
         }
         //cout<<*(i)<<" -> "<<detail[*(i)].first<<" /" <<detail[*(i)].second<<"\n";
     }
@@ -115,21 +116,24 @@ int main()
 {
     int t,kaS=0,i,j,k,p,q,r,taa;
     //FI;
-    FO;
-    cin>>taa;
+    //FO;
+    scanf("%d",&taa);
     while(taa--)
     {
         //cout<<taa<<endl;
         test=0;
 
-        string a,b;
+        //string a,b;
+        char aa[12],bb[12];
         mymap.clear();
         s.clear();
-        cin>>n;
+        scanf("%d", &n);
 
         for(int i=1;i<=n;i++)
         {
-            cin>> a>>b;
+            scanf("%s %s", aa,bb);
+            string a(aa);
+            string b(bb);
             mymap[a].push_back(b);
             s.insert(a);
             s.insert(b);
@@ -141,15 +145,6 @@ int main()
             detail[*(i)].first=0;
             detail[*(i)].second=0;
         }
-//        for(auto it:s)
-//        {
-//            cout<<it;
-//            for(int i=0;i<mymap[it].size();i++)
-//            {
-//                cout<<mymap[it][i]<<" ";
-//            }
-//            cout<<"\n";
-//        }
         dfs();
 
         printf("Case %d: ", ++kaS );
